@@ -100,10 +100,10 @@ class BotAssignment:
                     self.repeated_nums.append(check_temp)
 
                     if user_table[bot_row][bot_col] == 'B':
-                        print('COMPUTER HA ACERTADO')
+                        print('COMPUTER MADE A HIT!')
                         user_table[bot_row][bot_col] = 'H'
                     elif user_table[bot_row][bot_col] == ' ':
-                        print('COMPUTER HA FALLADO')
+                        print('COMPUTER HAS MISSED')
                         user_table[bot_row][bot_col] = 'M'
                     
                     break
@@ -112,10 +112,10 @@ class BotAssignment:
         else:
             self.repeated_nums.append(check_temp)
             if user_table[bot_row][bot_col] == 'B':
-                print('COMPUTER HA ACERTADO')
+                print('COMPUTER MADE A HIT!')
                 user_table[bot_row][bot_col] = 'H'
             elif user_table[bot_row][bot_col] == ' ':
-                print('COMPUTER HA FALLADO')
+                print('COMPUTER HAS MISSED')
                 user_table[bot_row][bot_col] = 'M'
             
         
@@ -135,29 +135,29 @@ class UserElection:
     
     #METHOD THAT ASKS THE PLAYER FOR ROW AND COLUMN
     def sink_election(self):
-        print('Porfavor, elija fila y columna')
+        print('PLEASE, SELECT LINE AND COLUMN')
         bot_row = None
         bot_col = None
         while bot_row == None:
             try:
-                bot_row = int(input('Elija fila (1-5): '))
+                bot_row = int(input('SELECT LINE (1-5): '))
                 if bot_row < 1 or bot_row > 5:
                     bot_row = None
                     raise Exception()
             except ValueError:
-                print('Eso no es un numero, pruebe otra vez!')
+                print('THAT IS NOT A NUMBER, TRY AGAIN!!')
             except Exception:
-                print('Ese numero esta fuera del rango')
+                print('THAT NUMBER IS OUT OF RANGE!')
         
         while bot_col == None:
             try:
-                bot_col = str(input('Elija columna (A-E): '))
+                bot_col = str(input('SELECT A COLUMN (A-E): '))
                 bot_col = bot_col.upper()
                 if bot_col != 'A' and bot_col != 'B' and bot_col != 'C' and bot_col != 'D' and bot_col != 'E':
                     bot_col = None
                     raise Exception
             except Exception:
-                print('La letra elegida esta fuera del rango A-E')
+                print('THE SELECTED LETTER IS OUT OF THE RANGE (A-E)')
         
         
         bot_row -= 1
@@ -175,7 +175,12 @@ class UserElection:
         bot_row, bot_col = user_ask()
         
         if user_table[bot_row][bot_col] == 'B':
-            print('Ya hay un barco aqui, escoja otro sitio!')
+            print('THERE IS ALREADY A SHIP HERE, CHOOSE ANOTHER SPOT!!')
+            while user_table[bot_row][bot_col] == 'B': 
+                bot_row, bot_col = user_ask()
+            user_table[bot_row][bot_col] = 'B'
+
+            
         else:
             user_table[bot_row][bot_col] = 'B'
 
@@ -185,15 +190,15 @@ class UserElection:
         bot_row, bot_col = user_ask()
 
         if bot_table[bot_row][bot_col] == 'O':
-            print('Has acertado!')
+            print('YOU MADE A HIT!!')
             print('\n')
             bot_table[bot_row][bot_col] = 'X'
             game_bot_table[bot_row][bot_col] = 'H'
         elif game_bot_table[bot_row][bot_col] == 'H' or game_bot_table[bot_row][bot_col] == 'W':
-            print('Ya has lanzado un misil aqui...')
+            print('YOU ALREADY HAVE THROWN AN ATTACK HERE ...')
             print('\n')
         else:
-            print('Has dado en agua!')
+            print('YOU HITTED WATER!')
             print('\n')
             game_bot_table[bot_row][bot_col] = 'W'
 
@@ -206,7 +211,7 @@ class UserElection:
 
         
         
-print('BIENVENIDO A HUNDIR LA FLOTA!')
+print('WELCOME TO BATTLESHIP!')
 time.sleep(1)
         
 
@@ -224,11 +229,11 @@ enemy.bot_ship_assignment()
 player = UserElection()
 
 count_b = sum(row.count('B') for row in user_table)
-print('PRIMERO ASIGNE SUS 6 BARCOS DISPONIBLES EN SU TABLERO')
+print('FIRST, ASSIGN YOUR 6 AVAILABLE SHIPS ON THE BOARD')
 
 #CHECKS THE AMAOUNT OF SHIPS THE PLAYER HAS LOCATED AND CHECKS THAT THE 6 SHIP LIMIT HASN'T BEEN SURPASED
 while count_b < 6:
-    print(f'Barcos restantes: {6-count_b}')
+    print(f'SHIPS REMAINING: {6-count_b}')
     count_b = sum(row.count('B') for row in user_table)
     player.ship_assignment(player.sink_election)
     count_b += 1
@@ -239,13 +244,13 @@ time.sleep(0.5)
     
 
 print('---------------------------------------------')
-print('YA HAS ASIGNADO TUS BARCOS')
+print('YOU HAVE ASSIGNED YOUR SHIPS SUCCESSFULY')
 print('---------------------------------------------')
 time.sleep(1)
 
 
 print('\n'*50)
-print('AHORA QUE EMPIEZA LA BATALLA NAVAL!')
+print('NOW, MAY THE BATTLESHIP BEGIN!!')
 print('\n'*50)
 time.sleep(1)
 
@@ -255,15 +260,15 @@ count_b_enemy = sum(row.count('B') for row in user_table)
 
 #CHECKS CONSTANTLY HOW MANY SHIPS DOES PLAYER AND ENEMY HAVE REMAINING
 while count_x > 0 and count_b_enemy > 0:
-    print('-TURNO DEL JUGADOR-')
+    print("-PLAYER'S TURN-")
     print('\n')
     player.check_hit(player.sink_election)
     count_x = sum(row.count('O') for row in bot_table)
-    print('TABLA DEL USUARIO\n')
+    print("PLAYER'S BOARD\n")
     for j in user_table:
         print(j)
     print('\n')
-    print('TABLA DEL ENEMIGO\n')
+    print("ENEMY'S BOARD\n")
     for k in game_bot_table:
         print(k)
         
@@ -272,18 +277,18 @@ while count_x > 0 and count_b_enemy > 0:
     time.sleep(4)
     print('\n'*50)
 
-    print('-TURNO DE COMPUTER-')
+    print("ENEMY'S TURN")
     enemy.enemy_attack()
     count_b_enemy = sum(row.count('B') for row in user_table)
-    print('TABLA DEL USUARIO\n')
+    print("PLAYER'S BOARD\n")
     for j in user_table:
         print(j)
     print('\n')
-    print('TABLA DEL ENEMIGO\n')
+    print("ENEMY'S BOARD\n")
     for k in game_bot_table:
         print(k)
 
 if count_x == 0:
-    print('EL USUARIO GANA!')
+    print('PLAYER TAKES THE WIN!')
 elif count_b_enemy == 0: 
-    print('COMPUTER GANA!')
+    print('COMPUTER WINS!')
