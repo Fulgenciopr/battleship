@@ -116,7 +116,7 @@ class BotAssignment:
                 print('COMPUTER HA FALLADO')
                 user_table[bot_row][bot_col] = 'M'
             
-        print(self.repeated_nums)
+        
 
 
         
@@ -182,12 +182,15 @@ class UserElection:
 
         if bot_table[bot_row][bot_col] == 'O':
             print('Has acertado!')
+            print('\n')
             bot_table[bot_row][bot_col] = 'X'
             game_bot_table[bot_row][bot_col] = 'H'
         elif game_bot_table[bot_row][bot_col] == 'H' or game_bot_table[bot_row][bot_col] == 'W':
             print('Ya has lanzado un misil aqui...')
+            print('\n')
         else:
             print('Has dado en agua!')
+            print('\n')
             game_bot_table[bot_row][bot_col] = 'W'
 
       
