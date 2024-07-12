@@ -66,9 +66,10 @@ columns_to_numbers = {
 }
 
 
-
+#INSTANTIATES A ENEMY WHICH AUTO ASSIGNS AND ATTACK BOTH SHIPS AND PLAYER
 class BotAssignment:
 
+    #ASSIGNS AUTOMATICALY SHIPS INSIDE THE TABLE
     def bot_ship_assignment(self):
 
         self.repeated_nums = []
@@ -84,6 +85,7 @@ class BotAssignment:
                 bot_table[bot_row][bot_col] = 'O'
             
 
+    #ATTACKS DIFFERENT COORDINATES RANDOMLY AND DOES NOT REPEAT ANY COORDINATES
     def enemy_attack(self):
         bot_row = rand.randint(0, 4)
         bot_col = rand.randint(0, 4)
@@ -128,9 +130,10 @@ class BotAssignment:
 
                 
 
-
+#INSTATIATES A INSTANCE OF THE PLAYER
 class UserElection:
-
+    
+    #METHOD THAT ASKS THE PLAYER FOR ROW AND COLUMN
     def sink_election(self):
         print('Porfavor, elija fila y columna')
         bot_row = None
@@ -167,6 +170,7 @@ class UserElection:
         return bot_row, bot_col
 
     
+    #ACCESES SINK_ELECTION METHOD AND ASKS FOR PLACEMENT OF PLAYER'S SHIPS
     def ship_assignment(self, user_ask):
         bot_row, bot_col = user_ask()
         
@@ -176,7 +180,7 @@ class UserElection:
             user_table[bot_row][bot_col] = 'B'
 
 
-
+    #CHECKS IF USER HAS HIT A ENEMY'S SHIP
     def check_hit(self, user_ask):
         bot_row, bot_col = user_ask()
 
@@ -212,17 +216,17 @@ time.sleep(1)
 
 
 
-
+#INSTANTIATES THE ENEMY INSTANCE
 enemy = BotAssignment()
 enemy.bot_ship_assignment()
-for i in bot_table:
-    print(i)
+
+#INSTATIATES THE PLAYER INSTANCE
 player = UserElection()
 
 count_b = sum(row.count('B') for row in user_table)
 print('PRIMERO ASIGNE SUS 6 BARCOS DISPONIBLES EN SU TABLERO')
 
-#PERMITE AL JUGADOR PONER SUS SEIS FLOTAS EN EL TABLERO DE JUEGO
+#CHECKS THE AMAOUNT OF SHIPS THE PLAYER HAS LOCATED AND CHECKS THAT THE 6 SHIP LIMIT HASN'T BEEN SURPASED
 while count_b < 6:
     print(f'Barcos restantes: {6-count_b}')
     count_b = sum(row.count('B') for row in user_table)
@@ -249,7 +253,7 @@ time.sleep(1)
 count_x = sum(row.count('O') for row in bot_table)
 count_b_enemy = sum(row.count('B') for row in user_table)
 
-#PERMITE AL JUGADOR HUNDIR LAS FLOTAS HASTA QUE NO HAYAN MAS
+#CHECKS CONSTANTLY HOW MANY SHIPS DOES PLAYER AND ENEMY HAVE REMAINING
 while count_x > 0 and count_b_enemy > 0:
     print('-TURNO DEL JUGADOR-')
     print('\n')
